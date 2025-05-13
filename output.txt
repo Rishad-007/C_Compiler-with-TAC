@@ -13,57 +13,14 @@ x = t1
 y = 10
 z = 5
 
-if (x > 5) GOTO L0 else GOTO L1
-
-LABEL L0:
-k = 0
-
-LABEL L2:
-
-if NOT (k < 10) GOTO L3
-t3 = x + 3
-y = t3
-t2 = k + 1
-k = t2
-JUMP to L2
-
-LABEL L3:
-
-LABEL L1:
-idx = 1
-GOTO next
-i = 0
-
-LABEL L4:
-
-if NOT (i < 10) GOTO L5
-
-if (x > 5) GOTO L6 else GOTO L7
-
-LABEL L6:
-
-LABEL L7:
-GOTO next
-j = 0
-
-LABEL L8:
-
-if NOT (j < z) GOTO L9
-a = 1
-t5 = j + 1
-j = t5
-JUMP to L8
-
-LABEL L9:
-t5 = j + 1
-j = t5
-JUMP to L4
-
-LABEL L5:
-
 
 								 PHASE 2: CODE OUTPUT PHASE 
 
+input.c:12:8: error: expected ';' after expression
+    z=5
+       ^
+       ;
+1 error generated.
 
 --- Program Output ---
 Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!Hi

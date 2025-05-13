@@ -283,6 +283,12 @@ expression: expression arithmetic expression {
 	temp_var++;
 	sprintf(icg[ic_idx++], "%s = %s %s %s\n",  $$.name, $1.name, $2.name, $3.name);
 }
+| '(' expression ')' { 
+    // Handle parenthesized expressions for three-address code
+    strcpy($$.name, $2.name); 
+    sprintf($$.type, $2.type); 
+    $$.nd = $2.nd; 
+}
 | value { strcpy($$.name, $1.name); sprintf($$.type, $1.type); $$.nd = $1.nd; }
 ;
 
