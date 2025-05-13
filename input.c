@@ -6,6 +6,7 @@ int main() {
     int x=1;
     int y=2;
     int z=3;
+    float f=1.0;
     x=3;
     y=10;
     z=5;
