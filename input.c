@@ -26,6 +26,6 @@ int main() {
         for(int j=0; j<z; j++) {
             a=1;
         }
-    } 
+    }
     return 1;
 }

@@ -312,21 +312,32 @@ return: RETURN { add('K'); } value ';' { check_return_type($3.name); $1.nd = mkn
 
 %%
 
+// Declare the output file as a global variable so yyerror can access it
+FILE *output_file;
+
 int main() {
     // Open output.txt file for storing all output
-    FILE *output_file = fopen("output.txt", "w");
+    output_file = fopen("output.txt", "w");
     if (output_file == NULL) {
         printf("Error opening output.txt file!\n");
         return 1;
     }
     
-    yyparse();
+    // Parse input and check for syntax errors
+    int parse_result = yyparse();
     
     // Helper function to print to both stdout and the output file
     #define PRINT_BOTH(fmt, ...) do { \
         printf(fmt, ##__VA_ARGS__); \
         fprintf(output_file, fmt, ##__VA_ARGS__); \
     } while(0)
+    
+    // If there were syntax or semantic errors, exit early
+    if (parse_result != 0 || sem_errors > 0) {
+        PRINT_BOTH("\nCompilation terminated due to syntax or semantic errors.\n");
+        fclose(output_file);
+        return 1;
+    }
     
     // Release memory that we don't need anymore
     int i;
@@ -539,5 +550,12 @@ void insert_type() {
 }
 
 void yyerror(const char* msg) {
-    fprintf(stderr, "%s\n", msg);
+    extern FILE *output_file;
+    extern int countn;
+    fprintf(stderr, "Error on line %d: %s\n", countn+1, msg);
+    if (output_file != NULL) {
+        fprintf(output_file, "Error on line %d: %s\n", countn+1, msg);
+    }
+    // Set a global error flag to indicate syntax error
+    sem_errors++;
 }
