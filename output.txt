@@ -63,4 +63,13 @@ LABEL L5:
 
 
 --- Program Output ---
-Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
