@@ -1,37 +1,39 @@
-# Mini_C_compiler with Three adress code
+# Mini_C_compiler with Three Address Code
 
-A simple compiler implementation demonstrating lexical analysis, syntax parsing, and intermediate code generation for a C-like language.
+A simple compiler implementation demonstrating lexical analysis, syntax parsing, semantic analysis, and intermediate code generation for a C-like language.
 
 ## Overview
 
-ReadyCompiler is a compiler project that demonstrates various phases of compilation including:
+ReadyCompiler demonstrates all major phases of compilation:
 
 1. **Lexical Analysis** - Using Flex to tokenize source code
 2. **Syntax Analysis** - Using Bison (YACC) for parsing
-3. **Intermediate Code Generation** - Generating three-address code
-4. **Code Output Phase** - Compiling and executing the generated code
-
-This project serves as an educational tool for understanding compiler construction fundamentals and demonstrates practical implementation of compiler theory concepts.
+3. **Semantic Analysis** - Type checking, symbol table, and error reporting
+4. **Intermediate Code Generation** - Three-address code
+5. **Code Output Phase** - Compiling and executing the generated code
 
 ## Project Structure
 
 - `lexer.l` - Flex lexical analyzer specification
-- `parser.y` - Bison grammar specification
+- `parser.y` - Bison grammar specification (main logic, error handling, codegen)
+- `parser_commented.y` - Commented version of the parser for learning/reference
 - `input.c` - Example input source file
 - `output.txt` - Generated output from compiler execution
 
 ## Features
 
 - Support for basic data types: int, float, char
-- Variables declaration and initialization
-- Arithmetic operations (+, -, \*, /)
+- Variable declaration and initialization
+- Arithmetic operations (+, -, *, /) with parentheses and precedence
 - Relational operations (<, >, <=, >=, ==, !=)
-- Control structures (if-else, for loops)
+- Control structures: if-else, for loops
 - Type checking and type conversion
-- Error reporting for semantic errors
-- Intermediate code generation
+- Error reporting for both syntax and semantic errors (with line numbers)
+- Intermediate (three-address) code generation
 - Symbol table management
-- Parse tree generation
+- Parse tree generation (AST)
+- Multiple input/output handling: supports different input files and outputs results to `output.txt`
+- Clear error output: prints only syntax error with line number if present, otherwise normal output
 
 ## Building and Running
 
@@ -54,15 +56,15 @@ yacc -d -v parser.y
 gcc -ll -w y.tab.c
 
 # Run the compiler on an input file
-./a.out<input.c
+./a.out < input.c
 ```
 
 ### Sample Execution
 
 The compiler processes input source code and produces:
 
-1. Intermediate code
-2. Compilation output
+1. Intermediate code (three-address code)
+2. Compilation output (GCC errors if any)
 3. Program execution results
 
 All output is displayed in the terminal and saved to `output.txt`.
@@ -80,7 +82,8 @@ int main() {
     int x=1;
     int y=2;
     int z=3;
-    x=3;
+    int k=9;
+    x=y+(z+k)/2;
     y=10;
     z=5;
     if(x>5) {
@@ -114,7 +117,11 @@ a = NULL
 x = 1
 y = 2
 z = 3
-x = 3
+k = 9
+t0 = z + k
+t1 = t0 / 2
+t2 = y + t1
+x = t2
 y = 10
 z = 5
 
@@ -126,10 +133,10 @@ k = 0
 LABEL L2:
 
 if NOT (k < 10) GOTO L3
-t1 = x + 3
-y = t1
-t0 = k + 1
-k = t0
+t4 = x + 3
+y = t4
+t3 = k + 1
+k = t3
 JUMP to L2
 
 LABEL L3:
@@ -146,6 +153,7 @@ if NOT (i < 10) GOTO L5
 if (x > 5) GOTO L6 else GOTO L7
 
 LABEL L6:
+
 LABEL L7:
 GOTO next
 j = 0
@@ -154,16 +162,11 @@ LABEL L8:
 
 if NOT (j < z) GOTO L9
 a = 1
-t3 = j + 1
-j = t3
+t6 = j + 1
+j = t6
 JUMP to L8
 
 LABEL L9:
-t3 = j + 1
-j = t3
-JUMP to L4
-
-LABEL L5:
 ```
 
 ### Program Output
@@ -182,56 +185,21 @@ Hello World!
 Hello World!
 ```
 
+### Syntax Error Example
+
+If a syntax error is present in the input, the output will be:
+
+```
+syntax error at line X
+```
+
 ## Implementation Details
 
-### Lexical Analyzer
-
-The lexical analyzer (`lexer.l`) identifies tokens such as:
-
-- Keywords (if, else, for, int, float, char, etc.)
-- Identifiers
-- Constants (integer, float, character)
-- Operators
-- Special symbols
-
-### Parser
-
-The parser (`parser.y`) implements a grammar for a C-like language and includes:
-
-- Expression parsing
-- Statement parsing
-- Control structure parsing
-- Type checking
-- Symbol table management
-- Intermediate code generation
-
-### Symbol Table
-
-The compiler maintains a symbol table to track:
-
-- Variable names
-- Data types
-- Variable types (variable, constant, function, etc.)
-- Line numbers for declarations
-
-### Intermediate Code Generation
-
-The compiler generates three-address code as an intermediate representation, which includes:
-
-- Assignment statements
-- Arithmetic operations
-- Conditional jumps
-- Labels
-
-## Error Handling
-
-The compiler detects and reports various errors, such as:
-
-- Undeclared variables
-- Multiple declarations
-- Type mismatch in assignments
-- Type mismatch in return statements
-- Use of reserved keywords as identifiers
+- **Lexical Analyzer**: Identifies keywords, identifiers, constants, operators, and special symbols.
+- **Parser**: Handles expression parsing, statement parsing, control structures, type checking, symbol table management, and intermediate code generation.
+- **Symbol Table**: Tracks variable names, data types, variable types, and line numbers for declarations.
+- **Intermediate Code Generation**: Produces three-address code for assignments, arithmetic, conditionals, and loops.
+- **Error Handling**: Reports undeclared variables, multiple declarations, type mismatches, and reserved keyword misuse. Syntax errors are reported with line numbers.
 
 ## Author
 

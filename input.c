@@ -7,7 +7,7 @@ int main() {
     int y=2;
     int z=3;
     int k=9;
-    x=y+(z+k);
+    x=y+(z+k)/2;
     y=10;
     z=5;
     if(x>5) {

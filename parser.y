@@ -284,7 +284,6 @@ expression: expression arithmetic expression {
 	sprintf(icg[ic_idx++], "%s = %s %s %s\n",  $$.name, $1.name, $2.name, $3.name);
 }
 | '(' expression ')' { 
-    // Handle parenthesized expressions for three-address code
     strcpy($$.name, $2.name); 
     sprintf($$.type, $2.type); 
     $$.nd = $2.nd; 
@@ -319,16 +318,20 @@ return: RETURN { add('K'); } value ';' { check_return_type($3.name); $1.nd = mkn
 %%
 
 int main() {
-    // Open output.txt file for storing all output
     FILE *output_file = fopen("output.txt", "w");
     if (output_file == NULL) {
         printf("Error opening output.txt file!\n");
         return 1;
     }
-    
-    yyparse();
-    
-    // Helper function to print to both stdout and the output file
+    int parse_result = yyparse();
+    if (parse_result != 0) {
+        // Syntax error occurred
+        extern int yylineno;
+        fprintf(output_file, "syntax error at line %d\n", yylineno);
+        printf("syntax error at line %d\n", yylineno);
+        fclose(output_file);
+        return 1;
+    }
     #define PRINT_BOTH(fmt, ...) do { \
         printf(fmt, ##__VA_ARGS__); \
         fprintf(output_file, fmt, ##__VA_ARGS__); \
