@@ -6,9 +6,10 @@ int main() {
     int x=1;
     int y=2;
     int z=3;
-    int k=9;
-    x=y+z+k;
+    float f=1.0;
+    x=3;
     y=10;
+    float f2=1.0;
     z=5;
     if(x>5) {
         for(int k=0; k<10; k++) {
@@ -19,7 +20,7 @@ int main() {
         int idx = 1;
     }
     for(int i=0; i<10; i++) {
-        printf("Hello World!");
+        printf("Hello World!\n");
         scanf("%d", &x);
         if (x>5) {
             printf("Hi");
@@ -27,6 +28,6 @@ int main() {
         for(int j=0; j<z; j++) {
             a=1;
         }
-    } 
+    }
     return 1;
 }

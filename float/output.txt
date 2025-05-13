@@ -2,14 +2,10 @@
 
 							   PHASE 1: INTERMEDIATE CODE GENERATION 
 
-a = NULL
 x = 1
 y = 2
 z = 3
-k = 9
-t0 = z + k
-t1 = y + t0
-x = t1
+x = 3
 y = 10
 z = 5
 
@@ -21,10 +17,10 @@ k = 0
 LABEL L2:
 
 if NOT (k < 10) GOTO L3
-t3 = x + 3
-y = t3
-t2 = k + 1
-k = t2
+t1 = x + 3
+y = t1
+t0 = k + 1
+k = t0
 JUMP to L2
 
 LABEL L3:
@@ -49,14 +45,14 @@ j = 0
 LABEL L8:
 
 if NOT (j < z) GOTO L9
-a = 1
-t5 = j + 1
-j = t5
+x = 1
+t3 = j + 1
+j = t3
 JUMP to L8
 
 LABEL L9:
-t5 = j + 1
-j = t5
+t3 = j + 1
+j = t3
 JUMP to L4
 
 LABEL L5:
@@ -66,4 +62,13 @@ LABEL L5:
 
 
 --- Program Output ---
-Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello!Hello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!HiHello World!Hi
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
+Hello World!
