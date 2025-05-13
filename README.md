@@ -1,4 +1,4 @@
-# ReadyCompiler
+# Mini_C_compiler with Three adress code
 
 A simple compiler implementation demonstrating lexical analysis, syntax parsing, and intermediate code generation for a C-like language.
 
@@ -45,16 +45,16 @@ This project serves as an educational tool for understanding compiler constructi
 
 ```bash
 # Generate the lexical analyzer
-flex lexer.l
+lex lexer.l
 
 # Generate the parser
-bison -dy parser.y
+yacc -d -v parser.y
 
 # Compile the generated code
-gcc y.tab.c -o readycompiler
+gcc -ll -w y.tab.c
 
 # Run the compiler on an input file
-./readycompiler < input.c
+./a.out<input1.c
 ```
 
 ### Sample Execution
