@@ -5,6 +5,7 @@ program_output
 y.output
 y.tab.c
 y.tab.h
+.DS_Store
 
 # OS generated files
 .DS_Store

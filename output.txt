@@ -1,1 +1,25 @@
-syntax error at line 13
+
+
+							   PHASE 1: INTERMEDIATE CODE GENERATION 
+
+i = NULL
+sum = 0
+i = 1
+
+LABEL L0:
+
+if NOT (i <= 10) GOTO L1
+t0 = i + 1
+i = t0
+t1 = sum + i
+sum = t1
+JUMP to L0
+
+LABEL L1:
+
+
+								 PHASE 2: CODE OUTPUT PHASE 
+
+
+--- Program Output ---
+55

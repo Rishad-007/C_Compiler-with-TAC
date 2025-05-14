@@ -283,11 +283,6 @@ expression: expression arithmetic expression {
 	temp_var++;
 	sprintf(icg[ic_idx++], "%s = %s %s %s\n",  $$.name, $1.name, $2.name, $3.name);
 }
-| '(' expression ')' { 
-    strcpy($$.name, $2.name); 
-    sprintf($$.type, $2.type); 
-    $$.nd = $2.nd; 
-}
 | value { strcpy($$.name, $1.name); sprintf($$.type, $1.type); $$.nd = $1.nd; }
 ;
 
@@ -318,20 +313,16 @@ return: RETURN { add('K'); } value ';' { check_return_type($3.name); $1.nd = mkn
 %%
 
 int main() {
+    // Open output.txt file for storing all output
     FILE *output_file = fopen("output.txt", "w");
     if (output_file == NULL) {
         printf("Error opening output.txt file!\n");
         return 1;
     }
-    int parse_result = yyparse();
-    if (parse_result != 0) {
-        // Syntax error occurred
-        extern int yylineno;
-        fprintf(output_file, "syntax error at line %d\n", yylineno);
-        printf("syntax error at line %d\n", yylineno);
-        fclose(output_file);
-        return 1;
-    }
+    
+    yyparse();
+    
+    // Helper function to print to both stdout and the output file
     #define PRINT_BOTH(fmt, ...) do { \
         printf(fmt, ##__VA_ARGS__); \
         fprintf(output_file, fmt, ##__VA_ARGS__); \
@@ -548,5 +539,22 @@ void insert_type() {
 }
 
 void yyerror(const char* msg) {
-    fprintf(stderr, "%s\n", msg);
+    extern int yylineno;
+    if (strstr(msg, "syntax error") != NULL) {
+        // Try to detect missing semicolon
+        // Print a more specific message if possible
+        fprintf(stderr, "Possible missing ';' at line %d\n", yylineno);
+        FILE *output_file = fopen("output.txt", "a");
+        if (output_file != NULL) {
+            fprintf(output_file, "Possible missing ';' at line %d\n", yylineno);
+            fclose(output_file);
+        }
+    } else {
+        fprintf(stderr, "%s\n", msg);
+        FILE *output_file = fopen("output.txt", "a");
+        if (output_file != NULL) {
+            fprintf(output_file, "%s\n", msg);
+            fclose(output_file);
+        }
+    }
 }

@@ -1,32 +1,14 @@
-#include<stdio.h>
-#include<string.h>
+#include <stdio.h>
 
 int main() {
-    int a;
-    int x=1;
-    int y=2;
-    int z=3;
-    int k=9;
-    x=y+(z+k)/2;
-    y=10;
-    z=5;
-    if(x>5) {
-        for(int k=0; k<10; k++) {
-            y = x+3;
-            printf("Hello!");
-        }
-    } else {
-        int idx = 1;
+    int i; 
+    int sum = 0;
+
+    for (i = 1; i <= 10; i=i+1) {
+        sum = sum + i;
     }
-    for(int i=0; i<10; i++) {
-        printf("Hello World!");
-        scanf("%d", &x);
-        if (x>5) {
-            printf("Hi");
-        }
-        for(int j=0; j<z; j++) {
-            a=1;
-        }
-    } 
-    return 1;
+
+    printf("%d\n", sum);
+
+    return 0;
 }

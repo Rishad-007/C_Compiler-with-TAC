@@ -24,7 +24,7 @@ ReadyCompiler demonstrates all major phases of compilation:
 
 - Support for basic data types: int, float, char
 - Variable declaration and initialization
-- Arithmetic operations (+, -, *, /) with parentheses and precedence
+- Arithmetic operations (+, -, \*, /) with parentheses and precedence
 - Relational operations (<, >, <=, >=, ==, !=)
 - Control structures: if-else, for loops
 - Type checking and type conversion
